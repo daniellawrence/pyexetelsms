@@ -1,0 +1,40 @@
+Exetel SMS Gateway
+Allow connections to the exetel api from python
+This was written based on api documenation: 
+http://exetel.com.au/Exetel_SMS_API_documentation.pdf
+
+Written By: Daniel Lawrence <daniel@danielscottlawrence.com>
+
+This connects to the remote exetel server and submits the SMS via https
+
+Example
+------------
+ #!/usr/bin/python
+ from exetelsms import Exetel, SMS
+
+ # Define username & password
+ USER = "YOUR_USERNAME"		# username at exetel sms gateway
+ PASSWORD = "YOUR_PASSWORD"	# password for above username
+
+ # connect to the gateway and get the current credit
+ print "Checking Credit of %s" % USER
+ sms_gateway = Exetel(USER, PASSWORD)
+ sms_gateway.get_credit()
+ print "%s has $%d in credit" % ( sms_gateway.username, sms_gateway.credit )
+
+ # construct an sms
+ SENDER = "Sender of the SMS" 	     # up to 11 chars
+ MOBILE = "0000000000" 		     # Australian phone number
+ MESSAGE = "Test sms from python API" # Message that will be sent
+ print "creating new sms"
+ sms = SMS(sms_gateway,SENDER,MOBILE,MESSAGE)
+
+ # Print the sms
+ print sms
+
+ # send the sms on its way...
+ print "Sending sms"
+ sms.send()
+ 
+ # print the new status
+ print sms
